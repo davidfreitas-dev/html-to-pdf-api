@@ -1,0 +1,8 @@
+{
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.5",
+        "selective/basepath": "^2.1",
+        "dompdf/dompdf": "^2.0"
+    }
+}

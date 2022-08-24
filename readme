@@ -1,0 +1,5 @@
+Adicione as linhas abaixo no arquivo .htaccess que esta na raiz do projeto para permitir CORS apos hospedagem
+
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+Header set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"

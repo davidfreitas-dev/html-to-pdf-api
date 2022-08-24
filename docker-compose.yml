@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  php:
+    build: .
+    container_name: PHP-Apache
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
