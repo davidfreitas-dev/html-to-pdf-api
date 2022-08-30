@@ -30,11 +30,20 @@ $app->post('/', function (Request $request, Response $response, array $args) {
     $options = $dompdf->getOptions();
     $options->setIsRemoteEnabled(true);
 
+    $header = file_get_contents(__DIR__ . '/header.html');
+    $content = utf8_encode(base64_decode($data['content']));
+    $footer = file_get_contents(__DIR__ . '/footer.html');
+
     $dompdf->setOptions($options);
-    $dompdf->loadHtml(base64_decode($data['content']));
+    $dompdf->loadHtml($header . $content . $footer);
     $dompdf->setBasePath('/../');
     $dompdf->setPaper('a4', 'portrait');
     $dompdf->render();
+
+    // $b64PDF = chunk_split(base64_encode($dompdf->output()));
+
+    // $response->getBody()->write($b64PDF);
+    // return $response;
 
     $response->getBody()->write($dompdf->output());
     return $response->withHeader('Content-type', 'application/pdf');
