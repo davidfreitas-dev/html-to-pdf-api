@@ -31,14 +31,28 @@ $app->post('/', function (Request $request, Response $response, array $args) {
     $options->setIsRemoteEnabled(true);
 
     $header = file_get_contents(__DIR__ . '/header.html');
-    $content = utf8_encode(base64_decode($data['content']));
     $footer = file_get_contents(__DIR__ . '/footer.html');
 
     $dompdf->setOptions($options);
-    $dompdf->loadHtml($header . $content . $footer);
+    $dompdf->loadHtml($header . $data['header'] . '</header>' . $data['body'] . $footer);
     $dompdf->setBasePath('/../');
     $dompdf->setPaper('a4', 'portrait');
     $dompdf->render();
+
+    // Parameters
+    $x          = 505;
+    $y          = 790;
+    $text       = "{PAGE_NUM} de {PAGE_COUNT}";     
+    $font       = $dompdf->getFontMetrics()->get_font('Helvetica', 'normal');   
+    $size       = 10;    
+    $color      = array(0,0,0);
+    $word_space = 0.0;
+    $char_space = 0.0;
+    $angle      = 0.0;
+
+    $dompdf->getCanvas()->page_text(
+        $x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle
+    );
 
     // $b64PDF = chunk_split(base64_encode($dompdf->output()));
 
